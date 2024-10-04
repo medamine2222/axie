@@ -10,7 +10,7 @@ error_reporting(0);
           header('Location: sign-in.php');
           exit;
         }
-        $secretKey = "6Lf_KFwkAAAAAIyfvwowcR5VHg98aQyfIDkMW8us";
+        $secretKey = "6LecKlgqAAAAABCmqaix1LQTdZxZPhQKO0PEakAO";
         $ip = $_SERVER['REMOTE_ADDR'];
         $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
         $responseKeys = json_decode($response,true);
