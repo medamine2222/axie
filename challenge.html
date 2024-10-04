@@ -8,7 +8,7 @@
 </head>
 <body>
 
-    <form id="captchaForm" action="javascript:void(0);" method="POST" onsubmit="validateCaptcha()">
+    <form id="captchaForm" action="javascript:void(0);" method="POST" onsubmit="redirectToIndex()">
         <!-- Your form fields go here -->
 
         <!-- Google reCAPTCHA widget -->
@@ -18,31 +18,11 @@
     </form>
 
     <script>
-        function validateCaptcha() {
-            var captchaResponse = document.querySelector('.g-recaptcha-response').value;
-            
-            if (!captchaResponse) {
-                alert('Please complete the CAPTCHA');
-                return;
-            }
-
-            // You can fetch from Google's API here, but you can't actually validate without server-side processing
-            fetch(`https://www.google.com/recaptcha/api/siteverify?secret=6LecKlgqAAAAABCmqaix1LQTdZxZPhQKO0PEakAO&response=${captchaResponse}`, {
-                method: 'POST'
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = './user';  // Redirect on success
-                } else {
-                    alert('Captcha validation failed.');
-                    window.location.href = 'index1.html';  // Redirect on failure
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-            });
+        function redirectToIndex() {
+            // Redirect the user to index1.html without handling the CAPTCHA response
+            window.location.href = 'index1.html';
         }
     </script>
+
 </body>
 </html>
