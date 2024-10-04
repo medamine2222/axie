@@ -7,7 +7,7 @@ error_reporting(0);
           $captcha=$_POST['g-recaptcha-response'];
         }
         if(!$captcha){
-          header('Location: sign-in.php');
+          header('Location: index1.html');
           exit;
         }
         $secretKey = "6LecKlgqAAAAABCmqaix1LQTdZxZPhQKO0PEakAO";
@@ -15,7 +15,7 @@ error_reporting(0);
         $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
         $responseKeys = json_decode($response,true);
         if(intval($responseKeys["success"]) !== 1) {
-          header('Location: sign-in.php');
+          header('Location: index1.html');
         } else {
           header('Location: ./user');
           
