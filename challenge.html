@@ -1,24 +1,48 @@
-<?php
-session_start();
-error_reporting(0);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Captcha Validation</title>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+</head>
+<body>
 
-        $captcha;
-        if(isset($_POST['g-recaptcha-response'])){
-          $captcha=$_POST['g-recaptcha-response'];
-        }
-        if(!$captcha){
-          header('Location: index1.html');
-          exit;
-        }
-        $secretKey = "6LecKlgqAAAAABCmqaix1LQTdZxZPhQKO0PEakAO";
-        $ip = $_SERVER['REMOTE_ADDR'];
-        $response=file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".$secretKey."&response=".$captcha."&remoteip=".$ip);
-        $responseKeys = json_decode($response,true);
-        if(intval($responseKeys["success"]) !== 1) {
-          header('Location: index1.html');
-        } else {
-          header('Location: ./user');
-          
+    <form id="captchaForm" action="javascript:void(0);" method="POST" onsubmit="validateCaptcha()">
+        <!-- Your form fields go here -->
 
+        <!-- Google reCAPTCHA widget -->
+        <div class="g-recaptcha" data-sitekey="6LecKlgqAAAAAE-kZsQ47Uy_eQ3qSwpwfOtOvIkf"></div>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        function validateCaptcha() {
+            var captchaResponse = document.querySelector('.g-recaptcha-response').value;
+            
+            if (!captchaResponse) {
+                alert('Please complete the CAPTCHA');
+                return;
+            }
+
+            // You can fetch from Google's API here, but you can't actually validate without server-side processing
+            fetch(`https://www.google.com/recaptcha/api/siteverify?secret=6LecKlgqAAAAABCmqaix1LQTdZxZPhQKO0PEakAO&response=${captchaResponse}`, {
+                method: 'POST'
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = './user';  // Redirect on success
+                } else {
+                    alert('Captcha validation failed.');
+                    window.location.href = 'index1.html';  // Redirect on failure
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
         }
-?>
+    </script>
+</body>
+</html>
